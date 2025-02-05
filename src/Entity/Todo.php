@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TodoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class Todo
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="todos")
      */
     private $category;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="todos")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function isDone(): bool
     {
@@ -104,6 +116,33 @@ class Todo
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addTodo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeTodo($this);
+        }
 
         return $this;
     }
