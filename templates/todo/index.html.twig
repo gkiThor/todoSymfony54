@@ -22,10 +22,12 @@
     <tr>
         <th>Id</th>
         <th>Todo</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>categories</th>
+        <th>users</th>
         <th>Fait</th>
         <th>Actions</th>
+        
+        
     </tr>
     </thead>
     <tbody>
@@ -34,8 +36,9 @@
 
             <td>{{ todo.id }}</td>
             <td>{{ todo.todo }}</td>
-            <td>{{ todo.name }}</td>
-            <td>{{ todo.description }}</td>
+            <td>{{ todo.category.name }}</td>
+            <td>{{ todo.users|join() }}</td>
+            
             
                 <td>
                     <input type="checkbox" class="task-checkbox" {{ todo.isDone() ? 'checked' : '' }}>
