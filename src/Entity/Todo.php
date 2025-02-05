@@ -38,6 +38,11 @@ class Todo
      */
     private bool $done = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="todos")
+     */
+    private $category;
+
     public function isDone(): bool
     {
         return $this->done;
@@ -87,6 +92,18 @@ class Todo
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
