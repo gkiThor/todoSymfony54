@@ -15,6 +15,8 @@ class TodoType extends AbstractType
             ->add('todo')
             ->add('name')
             ->add('description')
+            ->add('category')
+            ->add('users')
         ;
     }
 
